@@ -2,19 +2,218 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Agriculture Optimization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Optimization - Crop Recommendation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 680px;
+            padding: 35px 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #2e7d32;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            padding: 10px 14px;
+            border: 1.5px solid #dcdcdc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .result-box h3 {
+            color: #1b5e20;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .result-box p {
+            color: #2e7d32;
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Agriculture Optimization App</h1>
-    <form id="predictionForm">
-        <input type="number" id="n" placeholder="N" required>
-        <input type="number" id="p" placeholder="P" required>
-        <input type="number" id="k" placeholder="K" required>
-        <input type="number" id="temperature" placeholder="Temperature" required>
-        <input type="number" id="humidity" placeholder="Humidity" required>
-        <input type="number" id="ph" placeholder="pH" required>
-        <input type="number" id="rainfall" placeholder="Rainfall" required>
-        <button type="submit">Predict Crop</button>
-    </form>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 Agriculture Optimization</h1>
+            <p>Smart Crop Recommendation using Machine Learning</p>
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="n">Nitrogen (N) [0 - 140]</label>
+                    <input type="number" step="any" id="n" name="n" placeholder="e.g. 90" required>
+                </div>
+                <div class="form-group">
+                    <label for="p">Phosphorus (P) [5 - 145]</label>
+                    <input type="number" step="any" id="p" name="p" placeholder="e.g. 42" required>
+                </div>
+                <div class="form-group">
+                    <label for="k">Potassium (K) [5 - 205]</label>
+                    <input type="number" step="any" id="k" name="k" placeholder="e.g. 43" required>
+                </div>
+                <div class="form-group">
+                    <label for="temperature">Temperature (°C) [8 - 50]</label>
+                    <input type="number" step="any" id="temperature" name="temperature" placeholder="e.g. 20.8" required>
+                </div>
+                <div class="form-group">
+                    <label for="humidity">Humidity (%) [10 - 100]</label>
+                    <input type="number" step="any" id="humidity" name="humidity" placeholder="e.g. 82.0" required>
+                </div>
+                <div class="form-group">
+                    <label for="ph">Soil pH [3.5 - 9.9]</label>
+                    <input type="number" step="any" id="ph" name="ph" placeholder="e.g. 6.5" required>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="rainfall">Rainfall (mm) [20 - 300]</label>
+                    <input type="number" step="any" id="rainfall" name="rainfall" placeholder="e.g. 202.9" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Predict Recommended Crop</button>
+        </form>
+
+        <div id="resultBox" class="result-box">
+            <h3>Recommended Crop:</h3>
+            <p id="cropOutput"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const payload = {
+                n: parseFloat(document.getElementById('n').value),
+                p: parseFloat(document.getElementById('p').value),
+                k: parseFloat(document.getElementById('k').value),
+                temperature: parseFloat(document.getElementById('temperature').value),
+                humidity: parseFloat(document.getElementById('humidity').value),
+                ph: parseFloat(document.getElementById('ph').value),
+                rainfall: parseFloat(document.getElementById('rainfall').value)
+            };
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                if (data.crop) {
+                    document.getElementById('cropOutput').innerText = data.crop;
+                    document.getElementById('resultBox').style.display = 'block';
+                } else if (data.error) {
+                    alert('Error: ' + data.error);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to get prediction from server.');
+            }
+        });
+    </script>
 </body>
 </html>
+
