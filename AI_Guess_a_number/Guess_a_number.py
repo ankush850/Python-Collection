@@ -15,4 +15,21 @@ def play_game():
     while not correct_guess:
         guess = random.randint(low, high)
         print("Is your number", guess, "?")
-        user_input = i
+        user_input = input("Enter 'y', 'l', or 'h': ")
+
+        if user_input == "y":
+            print("I guessed it! Your number is", guess)
+            print("I made", guess_count, "guesses.")
+            correct_guess = True
+        elif user_input == "l":
+            high = guess - 1
+            guess_count += 1
+        elif user_input == "h":
+            low = guess + 1
+            guess_count += 1
+        else:
+            print("Invalid input. Please try again.")
+
+
+play_game()
+
