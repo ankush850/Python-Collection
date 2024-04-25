@@ -77,4 +77,77 @@ class TronGame:
 
         def simulate_move(pos, direction):
             x, y = pos
-            dx, dy 
+            dx, dy = direction
+            return (x + dx, y + dy)
+
+        def alpha_beta_search(pos, direction, opponent_pos, depth, alpha, beta, max_player):
+            if depth == 0:
+                return self.heuristic_evaluation(pos, opponent_pos)
+
+            if max_player:
+                value = -float('inf')
+                for d in [UP, DOWN, LEFT, RIGHT]:
+                    new_pos = simulate_move(pos, d)
+                    if is_valid_move(new_pos):
+                        value = max(value, alpha_beta_search(
+                            new_pos, d, opponent_pos, depth - 1, alpha, beta, False))
+                        alpha = max(alpha, value)
+                        if beta <= alpha:
+                            break
+                return value
+            else:
+                value = float('inf')
+                for d in [UP, DOWN, LEFT, RIGHT]:
+                    new_pos = simulate_move(opponent_pos, d)
+                    if is_valid_move(new_pos):
+                        value = min(value, alpha_beta_search(
+                            pos, direction, new_pos, depth - 1, alpha, beta, True))
+                        beta = min(beta, value)
+                        if beta <= alpha:
+                            break
+                return value
+
+        best_score = -float('inf')
+        best_move = None
+        for d in [UP, DOWN, LEFT, RIGHT]:
+            new_pos = simulate_move(player_pos, d)
+            if is_valid_move(new_pos):
+                score = alpha_beta_search(
+                    new_pos, d, opponent_pos, depth=3, alpha=-float('inf'), beta=float('inf'), max_player=False)
+                if score > best_score:
+                    best_score = score
+                    best_move = d
+        return best_move
+
+    def heuristic_evaluation(self, player_pos, opponent_pos):
+        # The heuristic evaluation function calculates the manhattan distance between the player's position and the opponent's position
+        return -(abs(player_pos[0] - opponent_pos[0]) + abs(player_pos[1] - opponent_pos[1]))
+
+    def run(self):
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_w and self.player1_direction != DOWN:
+                        self.player1_direction = UP
+                    elif event.key == pygame.K_s and self.player1_direction != UP:
+                        self.player1_direction = DOWN
+                    elif event.key == pygame.K_a and self.player1_direction != RIGHT:
+                        self.player1_direction = LEFT
+                    elif event.key == pygame.K_d and self.player1_direction != LEFT:
+                        self.player1_direction = RIGHT
+
+            self.screen.fill(WHITE)
+            self.update()
+            self.draw_board()
+            pygame.display.flip()
+            self.clock.tick(10)
+
+        pygame.quit()
+
+
+if __name__ == "__main__":
+    game = TronGame()
+    game.run()
+
