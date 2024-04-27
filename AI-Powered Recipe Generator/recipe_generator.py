@@ -61,4 +61,79 @@ recipe_instructions = {
     "Caprese Salad": "...",  # Instructions for Caprese Salad
     "Chocolate Brownies": "...",  # Instructions for Chocolate Brownies
     "Mushroom Risotto": "...",  # Instructions for Mushroom Risotto
-    "Grilled Salmon": "...",  
+    "Grilled Salmon": "...",  # Instructions for Grilled Salmon
+    "Vegetable Curry": "...",  # Instructions for Vegetable Curry
+    "Apple Pie": "...",  # Instructions for Apple Pie
+}
+
+# Function to preprocess the recipes
+
+
+def preprocess_recipe(recipe):
+    stop_words = set(stopwords.words("english"))
+    tokens = word_tokenize(recipe.lower())
+    return [word for word in tokens if word.isalpha() and word not in stop_words]
+
+# Function to generate a unique recipe
+
+
+def generate_recipe(ingredients, preferences=None):
+    processed_ingredients = preprocess_recipe(ingredients)
+
+    matching_recipes = []
+    for name, recipe_info in recipes.items():
+        if all(ingredient in recipe_info["ingredients"] for ingredient in processed_ingredients):
+            if not preferences or any(pref in preferences for pref in recipe_info["preferences"]):
+                matching_recipes.append(name)
+
+    if not matching_recipes:
+        return "Sorry, no recipe found with those ingredients and preferences. Try something else."
+
+    generated_recipe_name = random.choice(matching_recipes)
+    return generated_recipe_name, recipes[generated_recipe_name]["source_link"]
+
+# Function to get user ingredient substitutions
+
+# Function to suggest similar recipes
+
+
+def suggest_similar_recipes(generated_recipe_name):
+    similar_recipes = random.sample(
+        [name for name in recipes.keys() if name != generated_recipe_name], 2)
+    return similar_recipes
+
+# Main function
+
+
+def main():
+    print("AI-Powered Recipe Generator")
+    print("Available Recipes:")
+    for idx, recipe_name in enumerate(recipes.keys(), start=1):
+        print(f"{idx}. {recipe_name}")
+
+    user_ingredients = input(
+        "Enter the list of ingredients you have (comma-separated): ")
+    user_preferences = input(
+        "Enter your dietary preferences (comma-separated, or press Enter to skip): ").split(",")
+
+    generated_recipe_name, source_link = generate_recipe(
+        user_ingredients, user_preferences)
+
+    print("\nGenerated Recipe:")
+    print(f"Recipe: {generated_recipe_name}")
+    print("Ingredients:", recipes[generated_recipe_name]["ingredients"])
+    print("Instructions:")
+    print(recipe_instructions[generated_recipe_name])
+    print("Source Link:", source_link)
+
+    similar_recipes = suggest_similar_recipes(generated_recipe_name)
+    print("\nYou may also like these recipes:")
+    for idx, recipe_name in enumerate(similar_recipes, start=1):
+        print(f"{idx}. {recipe_name}")
+
+
+if __name__ == "__main__":
+    nltk.download("punkt")
+    nltk.download("stopwords")
+    main()
+
