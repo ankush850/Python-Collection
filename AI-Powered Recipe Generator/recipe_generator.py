@@ -27,4 +27,38 @@ recipes = {
         "ingredients": "chocolate, butter, sugar, eggs, flour, vanilla extract",
         "source_link": "https://www.example.com/chocolate-brownies",
         "preferences": ["vegetarian"],
-        "instructions": "1. Preheat oven to 350°F (175°C). Grease a baking pan.\n2. In a microwave-safe bowl, melt chocolate and butter together.\n3. Stir in sugar, eggs, flour, and vanilla extract until well combined.\n4. Pour the batter into the prepared pan.\n5. Bake for about 25 minutes or until a toothpick inserted in the center comes out with moist crumbs. Let it
+        "instructions": "1. Preheat oven to 350°F (175°C). Grease a baking pan.\n2. In a microwave-safe bowl, melt chocolate and butter together.\n3. Stir in sugar, eggs, flour, and vanilla extract until well combined.\n4. Pour the batter into the prepared pan.\n5. Bake for about 25 minutes or until a toothpick inserted in the center comes out with moist crumbs. Let it cool before cutting into squares.",
+    },
+    "Mushroom Risotto": {
+        "ingredients": "arborio rice, mushrooms, vegetable broth, onion, garlic, parmesan cheese",
+        "source_link": "https://www.example.com/mushroom-risotto",
+        "preferences": ["vegetarian"],
+        "instructions": "1. In a large skillet, sauté chopped onion and minced garlic in olive oil until translucent.\n2. Add arborio rice and stir until coated with oil.\n3. Gradually add vegetable broth, one ladleful at a time, stirring until the liquid is absorbed.\n4. Stir in sliced mushrooms and continue adding broth until the rice is creamy and cooked.\n5. Stir in grated parmesan cheese and serve hot.",
+    },
+    "Grilled Salmon": {
+        "ingredients": "salmon fillet, lemon, olive oil, garlic, dill, salt, pepper",
+        "source_link": "https://www.example.com/grilled-salmon",
+        "preferences": ["non-vegetarian"],
+        "instructions": "1. Preheat grill to medium-high heat.\n2. Rub salmon fillet with olive oil and season with salt, pepper, and minced garlic.\n3. Place the salmon on the grill and cook for a few minutes on each side until it flakes easily with a fork.\n4. Squeeze fresh lemon juice over the salmon and sprinkle with chopped dill before serving.",
+    },
+    "Vegetable Curry": {
+        "ingredients": "mixed vegetables, coconut milk, curry paste, onion, garlic, ginger",
+        "source_link": "https://www.example.com/vegetable-curry",
+        "preferences": ["vegetarian", "vegan"],
+        "instructions": "1. In a large pot, sauté chopped onion, minced garlic, and grated ginger in oil until fragrant.\n2. Add mixed vegetables and cook for a few minutes.\n3. Stir in curry paste and cook for another minute.\n4. Pour in coconut milk and bring to a simmer until the vegetables are tender.\n5. Serve the vegetable curry over cooked rice.",
+    },
+    "Apple Pie": {
+        "ingredients": "apples, sugar, flour, butter, cinnamon, pie crust",
+        "source_link": "https://www.example.com/apple-pie",
+        "preferences": ["vegetarian"],
+        "instructions": "1. Preheat oven to 375°F (190°C).\n2. Peel and slice apples, then mix with sugar, cinnamon, and flour.\n3. Roll out pie crust and place it in a pie dish.\n4. Fill the pie crust with the apple mixture.\n5. Add small pieces of butter on top of the apples.\n6. Roll out another pie crust for the top, seal the edges, and cut slits for venting.\n7. Bake for about 45 minutes or until the crust is golden brown and the apples are tender.",
+    },
+}
+# Instructions for each recipe
+recipe_instructions = {
+    "Spaghetti Carbonara": "...",  # Instructions for Spaghetti Carbonara
+    "Chicken Stir-Fry": "...",  # Instructions for Chicken Stir-Fry
+    "Caprese Salad": "...",  # Instructions for Caprese Salad
+    "Chocolate Brownies": "...",  # Instructions for Chocolate Brownies
+    "Mushroom Risotto": "...",  # Instructions for Mushroom Risotto
+    "Grilled Salmon": "...",  
